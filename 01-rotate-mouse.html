@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML5 ANIMATION STUDY</title>
+    <style>
+        *{
+            padding:0;
+            margin:0;
+        }
+        body{
+            text-align:center;
+        }
+        #canvas{
+            border: 1px solid #ccc;
+            margin:100px auto;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="800"></canvas>
+    <script src="lib/utils.js"></script>
+    <script src="js/arrow.js"></script>
+    <script>
+    window.onload = function(){
+        var canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            mouse = utils.captureMouse(canvas),
+            arrow = new Arrow(canvas.width/2,canvas.height/2);
+
+        // arrow.x = canvas.width/2;
+        // arrow.y = canvas.height/2;
+
+        (function drawFrame(){
+            window.requestAnimationFrame(drawFrame,canvas);
+
+            context.clearRect(0,0,canvas.width,canvas.height);
+
+            var dx = mouse.x - arrow.x,
+                dy = mouse.y - arrow.y;
+
+            arrow.rotation = Math.atan2(dy,dx);
+            arrow.draw(context);
+        }());
+    }
+    </script>
+</body>
+</html>
