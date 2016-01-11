@@ -19,29 +19,38 @@
 </head>
 <body>
     <canvas id="canvas" width="800" height="800"></canvas>
+    <textarea id="log" cols="30" rows="10"></textarea>
     <script src="lib/utils.js"></script>
     <script src="js/ball.js"></script>
     <script>
     window.onload = function(){
         var canvas = document.getElementById('canvas'),
             context = canvas.getContext('2d'),
-            ball = new Ball(),
-            angle = 0,
-            centerX = canvas.width/2,
-            centerY = canvas.height/2,
-            radiusX = 200,
-            radiusY = 100,
-            speed = 0.05,
-            circle = new Ball(centerX,centerY,2);;
+            mouse = utils.captureMouse(canvas),
+            log = document.getElementById('log'),
+            rect = {
+                x: canvas.width/2,
+                y: canvas.height/2
+            };
 
         (function drawFrame(){
             window.requestAnimationFrame(drawFrame,canvas);
             context.clearRect(0,0,canvas.width,canvas.height);
-            ball.x = centerX + Math.cos(angle)*radiusX;
-            ball.y = centerY + Math.sin(angle)*radiusY;
-            angle += speed;
-            ball.draw(context);
-            circle.draw(context);
+            var dx = rect.x - mouse.x,
+                dy = rect.y - mouse.y,
+                dist = Math.sqrt(dx*dx,dy*dy);
+
+            context.fillStyle = '#000';
+            context.fillRect(rect.x - 2,rect.y - 2,4,4);
+
+            // draw line
+            context.beginPath();
+            context.moveTo(rect.x,rect.y);
+            context.lineTo(mouse.x,mouse.y);
+            context.closePath();
+            context.stroke();
+
+            log.value = 'distance: ' + dist;
         }());
     }
     </script>

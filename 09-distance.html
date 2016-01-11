@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML5 ANIMATION STUDY</title>
+    <style>
+        *{
+            padding:0;
+            margin:0;
+        }
+        body{
+            text-align:center;
+        }
+        #canvas{
+            border: 1px solid #ccc;
+            margin:100px auto;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="800"></canvas>
+    <textarea id="log" cols="30" rows="10"></textarea>
+    <script src="lib/utils.js"></script>
+    <script src="js/ball.js"></script>
+    <script>
+    window.onload = function(){
+        var canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            log = document.getElementById('log');
+
+        var rect1 = {
+            x: Math.random()*canvas.width,
+            y: Math.random()*canvas.height
+        };
+
+        context.fillStyle = '#000000';
+        context.fillRect(rect1.x - 2,rect1.y - 2,10,10);
+
+        var rect2 = {
+            x: Math.random()*canvas.width,
+            y: Math.random()*canvas.height
+        };
+
+        context.fillStyle = 'red';
+        context.fillRect(rect2.x - 2, rect2.y - 2,10,10);
+
+        var dx = rect1.x - rect2.x,
+            dy = rect1.y - rect2.y,
+            dist = Math.sqrt(dx*dx,dy*dy);
+
+        log.value = 'distance: ' + dist;
+    }
+    </script>
+</body>
+</html>
