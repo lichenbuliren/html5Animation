@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML5 ANIMATION STUDY</title>
+    <style>
+        *{
+            padding:0;
+            margin:0;
+        }
+        body{
+            text-align:center;
+        }
+        #canvas{
+            border: 1px solid #ccc;
+            margin:100px auto;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="800"></canvas>
+    <script src="lib/utils.js"></script>
+    <script src="js/ball.js"></script>
+    <script>
+    window.onload = function(){
+        var canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            ball = new Ball(),
+            angleX = 0,
+            angleY = 0,
+            range = 200,
+            centerX = canvas.width/2,
+            centerY = canvas.height/2,
+            xspeed = 0.07,
+            yspeed = 0.11;
+
+        (function drawFrame(){
+            window.requestAnimationFrame(drawFrame,canvas);
+            context.clearRect(0,0,canvas.width,canvas.height);
+            console.log(Math.sin(angleX)*range);
+            ball.x = centerX + Math.sin(angleX)*range;
+            ball.y = centerY + Math.sin(angleY)*range;
+            angleX += xspeed;
+            angleY += yspeed;
+            ball.draw(context);
+        }());
+    }
+    </script>
+</body>
+</html>
