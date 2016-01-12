@@ -19,29 +19,28 @@
 </head>
 <body>
     <canvas id="canvas" width="800" height="800"></canvas>
-    <script src="lib/utils.js"></script>
-    <script src="js/ball.js"></script>
+    <script src="../lib/utils.js"></script>
     <script>
     window.onload = function(){
         var canvas = document.getElementById('canvas'),
             context = canvas.getContext('2d'),
-            ball = new Ball(),
-            angle = 0,
-            centerX = canvas.width/2,
-            centerY = canvas.height/2,
-            radiusX = 200,
-            radiusY = 100,
-            speed = 0.05,
-            circle = new Ball(centerX,centerY,2);
+            mouse = utils.captureMouse(canvas),
+            x0 = 100,
+            y0 = 200,
+            x2 = 300,
+            y2 = 200;
 
         (function drawFrame(){
             window.requestAnimationFrame(drawFrame,canvas);
             context.clearRect(0,0,canvas.width,canvas.height);
-            ball.x = centerX + Math.cos(angle)*radiusX;
-            ball.y = centerY + Math.sin(angle)*radiusY;
-            angle += speed;
-            ball.draw(context);
-            circle.draw(context);
+
+            // 计算出曲线会穿过的点对应的quadraticCurveTo(x1,y1,x2,y2);x1,y1
+            var x1 = mouse.x * 2 - (x0 + x2)/2,
+                y1 = mouse.y * 2 - (y0 + y2)/2;
+            context.beginPath();
+            context.moveTo(x0,y0);
+            context.quadraticCurveTo(x1,y1,x2,y2);
+            context.stroke();
         }());
     }
     </script>
